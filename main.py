@@ -85,9 +85,13 @@ def get_mode():
     return os.getenv("MCP_MODE", "http")
 
 
-if __name__ == "__main__":
+def main():
     mode = get_mode()
     if mode == "stdio":
         mcp.run(transport="stdio")
     else:
         mcp.run(transport="streamable-http")
+
+
+if __name__ == "__main__":
+    main()
