@@ -1,51 +1,43 @@
 # Leonardo MCP Server
 
-A Model Context Protocol (MCP) server for Leonardo AI, supporting both HTTP and stdio modes.
+A Model Context Protocol (MCP) server for Leonardo AI, supporting both `HTTP` and `stdio` modes.
 
 ## Features
-- Exposes Leonardo AI image generation and model management via MCP
-- Supports both HTTP and stdio transports
+- Create image generation jobs with Leonardo AI
+- See available models
+- Check the status of image generation jobs
+- Get all the user's image generation jobs
+- Supports both `HTTP` and `stdio` transports
 
 ## Installation
 
-1. **Clone the repository:**
-   ```sh
-   git clone <this-repo-url>
-   cd leonardo-mcp-server
-   ```
-2. **Install dependencies:**
-   ```sh
-   uv pip install -r requirements.txt  # or use `uv pip install .` if you have uv
-   ```
-   Or, if you use [uv](https://github.com/astral-sh/uv):
-   ```sh
-   uv venv .venv
-   source .venv/bin/activate
-   uv pip install .
-   ```
+[//]: # (Instructions for different clients)
+### JSON Config
+Support for Claude Desktop, Cursor and other MCP clients that use JSON config files.
 
-## Usage
+[//]: # (Note, warning, tip)
 
-### With `uvx` (recommended)
+> [!IMPORTANT]  
+> 🔑You will need to [generate a Leonardo API key](https://docs.leonardo.ai/docs/create-your-api-key) and set it in the environment variable `LEONARDO_API_KEY` before running the server.
 
-You can run the server using [uvx](https://github.com/modelcontextprotocol/uvx):
 
-```sh
-uvx @leonardo-mcp-server --mode http   # HTTP mode (default)
-uvx @leonardo-mcp-server --mode stdio  # stdio mode
-```
-
-Or set the environment variable:
-
-```sh
-MCP_MODE=stdio uvx @leonardo-mcp-server
-```
-
-### Directly with Python
-
-```sh
-python main.py http   # HTTP mode (default)
-python main.py stdio  # stdio mode
+```json
+{
+  "mcpServers": {
+    "leonardo-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/ish-joshi/leonardo-mcp-server",
+        "leonardo-mcp-server",
+        "stdio"
+      ],
+      "env": {
+        "LEONARDO_API_KEY": "YOUR_LEONARDO_API_KEY"
+      }
+    }
+  }
+}
 ```
 
 ## Running Modes
@@ -64,9 +56,7 @@ This server supports two modes:
 Start the server in HTTP mode (default):
 
 ```sh
-uvx @leonardo-mcp-server --mode http
-# or
-python main.py http
+uvx --from git+https://github.com/ish-joshi/leonardo-mcp-server leonardo-mcp-server
 ```
 
 If your client is remote (e.g., ChatGPT Playground), you must expose your local server to the internet. You can use [ngrok](https://ngrok.com/) or a similar tunneling tool:
@@ -82,9 +72,7 @@ Copy the public URL from ngrok and use it as the endpoint in your client.
 Start the server in stdio mode:
 
 ```sh
-uvx @leonardo-mcp-server --mode stdio
-# or
-python main.py stdio
+uvx --from git+https://github.com/ish-joshi/leonardo-mcp-server leonardo-mcp-server stdio
 ```
 
 ## Environment Variables
@@ -93,6 +81,3 @@ python main.py stdio
 ## Development
 - Edit `main.py` to add or modify MCP tools.
 - See [python-sdk documentation](https://github.com/modelcontextprotocol/python-sdk) for more info.
-
-## License
-MIT
