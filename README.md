@@ -18,7 +18,7 @@ Support for Claude Desktop, Cursor and other MCP clients that use JSON config fi
 [//]: # (Note, warning, tip)
 
 > [!IMPORTANT]  
-> 🔑You will need to [generate a Leonardo API key](https://docs.leonardo.ai/docs/create-your-api-key) and set it in the environment variable `LEONARDO_API_KEY` before running the server.
+> You will need to [generate a Leonardo API key](https://docs.leonardo.ai/docs/create-your-api-key) and set it in the environment variable `LEONARDO_API_KEY` before running the server.
 
 
 ```json
@@ -80,4 +80,5 @@ uvx --from git+https://github.com/ish-joshi/leonardo-mcp-server leonardo-mcp-ser
 
 ## Development
 - Edit `main.py` to add or modify MCP tools.
+- Run using `python main.py` and test with a compatible MCP client. I prefer to use [5ire](https://5ire.app/) MCP client for testing.
 - See [python-sdk documentation](https://github.com/modelcontextprotocol/python-sdk) for more info.
