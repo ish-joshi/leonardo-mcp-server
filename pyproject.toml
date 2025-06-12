@@ -1,0 +1,15 @@
+[project]
+name = "leonardo-mcp-server"
+version = "0.1.0"
+description = "Leonardo AI Model Context Protocol (MCP) server."
+requires-python = ">=3.12"
+dependencies = [
+    "leonardo-ai-sdk",
+    "modelcontextprotocol",
+]
+
+[project.scripts]
+leonardo-mcp-server = "main:main"
+
+[tool.uv]
+main = "main:main"
