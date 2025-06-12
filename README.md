@@ -40,6 +40,11 @@ Support for Claude Desktop, Cursor and other MCP clients that use JSON config fi
 }
 ```
 
+## Demo
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/dcFaF5WXKwE/0.jpg)](https://www.youtube.com/watch?v=dcFaF5WXKwE)
+
+
 ## Running Modes
 
 This server supports two modes:
