@@ -5,7 +5,7 @@ description = "Leonardo AI Model Context Protocol (MCP) server."
 requires-python = ">=3.12"
 dependencies = [
     "leonardo-ai-sdk",
-    "modelcontextprotocol",
+    "mcp[cli]",
 ]
 
 [project.scripts]
