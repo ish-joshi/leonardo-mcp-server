@@ -1,9 +1,12 @@
+import datetime
 import json
 import os
 import sys
+import time
 
 from leonardo_ai_sdk import LeonardoAiSDK
 from leonardo_ai_sdk.models.operations import CreateGenerationRequestBody, CreateGenerationRequestBodyTypedDict
+from leonardo_ai_sdk.models.shared import JobStatus
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("Leonardo AI MCP", "0.1.0", stateless_http=True)
@@ -66,7 +69,21 @@ def create_image_job(request_overrides: CreateGenerationRequestBodyTypedDict) ->
     response = leo_client.image.create_generation(
         request=request
     )
-    return response.object.model_dump_json(by_alias=True)
+
+    job_max_wait = 15  # seconds to wait for the job to complete
+    # now wait for the job to complete or if a certain timeout is reached
+    now = datetime.datetime.now()
+    wait_between_polls = 2  # seconds to wait between status checks
+    latest_response = response
+    while datetime.datetime.now() - now < datetime.timedelta(seconds=job_max_wait):
+        status_response = leo_client.image.get_generation_by_id(id=response.object.sd_generation_job.generation_id)
+        current_status = status_response.object.generations_by_pk.status
+        if current_status in [JobStatus.COMPLETE, JobStatus.FAILED]:
+            latest_response = status_response
+            break
+        time.sleep(wait_between_polls)
+
+    return latest_response.object.model_dump_json(by_alias=True)
 
 
 @mcp.tool()
